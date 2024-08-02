@@ -8,7 +8,7 @@ const Category = sequelize.define("category", {
     parentId: {
         type: DataTypes.INTEGER, allowNull: true,
         references: {
-            model: 'categories',
+            model: this.Category,
             key: "id"
         },
         onDelete: "CASCADE"
@@ -24,19 +24,22 @@ sequelize.sync().then(() => {
 })
 
 Category.hasOne(Category, {
-    as: 'subCategory', foreignKey: "parentId", inverse: {
+    as: "parent", foreignKey: "parentId",
+    inverse: {
         as: "children"
     }
 });
 
 Category.belongsTo(Category, {
-    as: "parent",
-    foreignKey: "parentId",
-    inverse: { as: "children" }
+    as: "children", foreignKey: "parentId", inverse: {
+        as: "parent"
+    }
 });
 
-// Category.hasMany(Products, { foreignKey: "belongsTo" })
+// Category.hasMany(Products, { foreignKey: "belongsTo" });
+// Products.belongsToMany(Category, { foreignKey: "id", through: Category })
 
 module.exports = {
     Category
 }
+
