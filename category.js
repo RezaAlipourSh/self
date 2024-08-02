@@ -1,6 +1,6 @@
 const { sequelize } = require("./config");
 const { DataTypes } = require("@sequelize/core");
-// const { Products } = require("./products");
+const { Products } = require("./products");
 
 const Category = sequelize.define("category", {
     name: { type: DataTypes.STRING(30), allowNull: false, unique: true },
@@ -36,8 +36,7 @@ Category.belongsTo(Category, {
     }
 });
 
-// Category.hasMany(Products, { foreignKey: "belongsTo" });
-// Products.belongsToMany(Category, { foreignKey: "id", through: Category })
+Category.hasMany(Products, { foreignKey: "belongsTo" });
 
 module.exports = {
     Category

@@ -1,30 +1,18 @@
-const { Category } = require("./category");
 const { sequelize } = require("./config");
-// const { Products } = require("./products");
+const { findById } = require("./controllers");
+const { Category } = require("./category");
+const { Products } = require("./products");
 
 async function main() {
-    await sequelize.sync({ force: true });
-
-    // const cat1 = await Category.create({
-    //     name: "digital", icon: "digione.svg", desc: "some digital details"
-    // })
-
-    // const cat2 = await Category.create({ name: "digital2", icon: "digione.svg", desc: "some digital details", parentId: 1 })
-    await Category.bulkCreate([
-        { name: "digital", icon: "digione.svg", desc: "some digital details" },
-        { name: "digital2", icon: "digione.svg", desc: "some digital details", parentId: 1 },
-        { name: "digital3", icon: "digione.svg", desc: "some digital details", parentId: 1 },
-    ]);
-
-    // await cat1.setCategory(cat2)
+    await sequelize.sync({ alter: true });
+    // await Category.bulkCreate([
+    //     { name: "laptops", icon: "laptop.svg", desc: "laptop category", parentId: 1 },
+    // ]);
 
     // await Products.bulkCreate([
-    //     { title: "macbook", price: 1000, belongsto: 2 },
-    //     { title: "surfacebook", price: 1100, belongsto: 1 },
-
+    //     { title: "asus vivobook", price: 600, belongsTo: 46 },
+    //     { title: "msi katana", price: 950, belongsTo: 46 },
     // ])
-
-
-}
-
-main()
+    findById(46)
+};
+main();
